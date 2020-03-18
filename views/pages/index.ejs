@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <%- include ('../partials/head'); -%>
+</head>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+<body>
+    <header>
+        <%- include ('../partials/header'); -%>
+        <title>Amamra's Classroom</title>
+    </header>
+    <div id="signDiv">
+      
+        <form style="padding: 35px;">
+            <label for="fname">Username:</label><br>
+            <input id="signDiv-username" type="text"><br>
+            <label for="pword">Password:</label><br>
+            <input id="signDiv-password" type="text"><br><br>
+            <button id="signDiv-signIn">Log In</button>
+            <button id="signDiv-signUp">Sign Up</button>
+        </form>
+       
+    </div>
+
+    <div id="portalDiv" style="display:none;">
+    <h1>Signed in</h1>
+    </div> 
+    <script src="js/socketindex.js"></script>
+    <footer>
+        <%- include ('../partials/footer'); -%>
+    </footer>
+</body>
+
+</html>
