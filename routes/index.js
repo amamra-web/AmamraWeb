@@ -1,5 +1,6 @@
 var express = require('express');
 var router =  express.Router();
+var http = require('http');
 
 //Home page
 router.get('/', function(req,res,next){
@@ -38,6 +39,14 @@ router.get('/ejs-test', (req,res,next) => {
         data:['1sdfghhjkkj','2dsfgde','3fdgd','4asd']
 
     })
+});
+
+const server = http.createServer((req,res) => {
+    res.end('Hello World');
+});
+
+server.listen(3000, () => {
+    console.log(`Server running`);
 });
 
 // Middleware to catch 404 errors

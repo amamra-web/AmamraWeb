@@ -27,3 +27,37 @@ socket.on('signUpResponse',function(data){
     } else
         alert("Sign up unsuccessful.");
 });
+
+socket.on('create-room', function(data) {
+    //Emit down event to room
+    if(data.pin) {
+        console.log(`Room ${data.pin} has been created, and host joined`);
+        socket.join(data.pin);
+    } else {
+        console.log("Room PIN is undefined");
+    }
+});
+
+//Triggers when a user joins a room
+socket.on('user-join-up', function(data) {
+    //Emit down event to room  
+    console.log(`User has joined room ${data.pin}`); 
+    var clients = comms.in(data.pin).clients((err,clients) => {
+        if(err) throw error;
+        console.log('Number of users in room ' + data.pin + " " + clients)
+    });
+    socket.join(data.pin);         
+});
+
+socket.on('userAnswerUp', function(data) {
+    if(data) {
+        alert('user has answered');
+    } else {
+        alert('something went wrong');
+    }
+    socket.emit('userAnswerDown')
+});
+
+socket.on('nextQuestionUp', function(data) {
+    socket.in(data.pin).emit('nextQuestionDown');
+});
