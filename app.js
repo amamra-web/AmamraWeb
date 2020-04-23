@@ -99,51 +99,10 @@ var addUser = function(data,cb){
     },10);
 }
 
-
-
 //Socket IO
 var io = require('socket.io')(serv,{});
-
-io.sockets.on('connection', function(socket){
-    socket.id = Math.random();
-    SOCKET_LIST[socket.id] = socket;
-    
-    socket.on('signIn',function(data){
-        isValidPassword(data,function(res){
-            if(res){
-                Student.onConnect(socket);
-                socket.emit('signInResponse',{success:true});
-            } else {
-                socket.emit('signInResponse',{success:false});         
-            }
-        });
-    });
-    socket.on('signUp',function(data){
-        isUsernameTaken(data,function(res){
-            if(res){
-                socket.emit('signUpResponse',{success:false});     
-            } else {
-                addUser(data,function(){
-                    socket.emit('signUpResponse',{success:true});                  
-                });
-            }
-        });    
-    });
-   
-   
-    socket.on('disconnect',function(){
-        delete SOCKET_LIST[socket.id];
-        Student.onDisconnect(socket);
-    });
-
-    socket.on('evalServer',function(data){
-        if(!DEBUG)
-            return;
-        var res = eval(data);
-        socket.emit('evalAnswer',res);     
-    });
-   
-});
+var socketIndex = require('./public/js/socketIndex.js')
+socketIndex.startCommunication(io);
 
 setInterval(function(){
     var pack = {

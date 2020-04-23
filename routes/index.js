@@ -41,17 +41,4 @@ router.get('/ejs-test', (req,res,next) => {
     })
 });
 
-const server = http.createServer((req,res) => {
-    res.end('Hello World');
-});
-
-server.listen(3000, () => {
-    console.log(`Server running`);
-});
-
-// Middleware to catch 404 errors
-router.use(function(req, res, next) {
-    res.status(404).render('404');
-  });
-
 module.exports = router;
