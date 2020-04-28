@@ -18,6 +18,7 @@ socket.on('signInResponse',function(data){
     if(data.success){
         signDiv.style.display = 'none';
         portalDiv.style.display = 'inline-block';
+        alert("Sign up successful.");
     } else
         alert("Sign in unsuccessful.");
 });
@@ -61,3 +62,5 @@ socket.on('userAnswerUp', function(data) {
 socket.on('nextQuestionUp', function(data) {
     socket.in(data.pin).emit('nextQuestionDown');
 });
+
+socket.on('')
