@@ -6,6 +6,7 @@ var signDivUsername = document.getElementById('signDiv-username');
 var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
 var signDivPassword = document.getElementById('signDiv-password');
+var testButton = document.getElementById('testSocket');
 
 signDivSignIn.onclick = function(){
     socket.emit('signIn',{username:signDivUsername.value,password:signDivPassword.value});
@@ -13,6 +14,15 @@ signDivSignIn.onclick = function(){
 signDivSignUp.onclick = function(){
     socket.emit('signUp',{username:signDivUsername.value,password:signDivPassword.value});
 }
+
+testButton.onclick = function(){
+    socket.broadcast.emit('hello');
+}
+
+socket.on('helloBack', function(data) {
+    console.log('helloBack is hit');
+    alert(data);
+})
 
 socket.on('signInResponse',function(data){
     if(data.success){
@@ -38,29 +48,3 @@ socket.on('create-room', function(data) {
         console.log("Room PIN is undefined");
     }
 });
-
-//Triggers when a user joins a room
-socket.on('user-join-up', function(data) {
-    //Emit down event to room  
-    console.log(`User has joined room ${data.pin}`); 
-    var clients = comms.in(data.pin).clients((err,clients) => {
-        if(err) throw error;
-        console.log('Number of users in room ' + data.pin + " " + clients)
-    });
-    socket.join(data.pin);         
-});
-
-socket.on('userAnswerUp', function(data) {
-    if(data) {
-        alert('user has answered');
-    } else {
-        alert('something went wrong');
-    }
-    socket.emit('userAnswerDown')
-});
-
-socket.on('nextQuestionUp', function(data) {
-    socket.in(data.pin).emit('nextQuestionDown');
-});
-
-socket.on('')
