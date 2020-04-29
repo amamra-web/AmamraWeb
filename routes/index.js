@@ -1,5 +1,6 @@
 var express = require('express');
 var router =  express.Router();
+var http = require('http');
 
 //Home page
 router.get('/', function(req,res,next){
@@ -39,10 +40,5 @@ router.get('/ejs-test', (req,res,next) => {
 
     })
 });
-
-// Middleware to catch 404 errors
-router.use(function(req, res, next) {
-    res.status(404).render('404');
-  });
 
 module.exports = router;
