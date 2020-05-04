@@ -55,6 +55,7 @@ module.exports = {
         comms.on('connection', function(socket){
             socket.id = Math.random();
             SOCKET_LIST[socket.id] = socket;
+            console.log("Someone has connected");
             
             // socket.on('signIn',function(data){
             //     isValidPassword(data,function(res){
