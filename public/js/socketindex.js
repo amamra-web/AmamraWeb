@@ -56,40 +56,13 @@ module.exports = {
             socket.id = Math.random();
             SOCKET_LIST[socket.id] = socket;
             console.log("Someone has connected");
-            
-            // socket.on('signIn',function(data){
-            //     isValidPassword(data,function(res){
-            //         if(res){
-            //             Student.onConnect(socket);
-            //             socket.emit('signInResponse',{success:true});
-            //         } else {
-            //             socket.emit('signInResponse',{success:false});         
-            //         }
-            //     });
-            // });
-            // socket.on('signUp',function(data){
-            //     isUsernameTaken(data,function(res){
-            //         if(res){
-            //             socket.emit('signUpResponse',{success:false});     
-            //         } else {
-            //             addUser(data,function(){
-            //                 socket.emit('signUpResponse',{success:true});                  
-            //             });
-            //         }
-            //     });    
-            // });
-
-            // socket.on('hello', function(data){
-            //     console.log("hello is hit");
-            //     socket.broadcast.emit('helloBack', "hello");
-            // });
 
             //Triggers when a user joins a quiz
-            socket.on('enable-quiz-up', function(data) {
+            socket.on('enable-quiz-up', function(pin) {
                 //creates the socket channel
-                if(data.pin) {
-                    console.log(`Room ${data.pin} has been created, and host joined`);
-                    socket.join(data.pin)
+                if(pin) {
+                    console.log(`Room ${pin} has been created, and host joined`);
+                    socket.join(pin)
                 } else {
                     console.log("Room PIN is undefined");
                 }
@@ -135,6 +108,7 @@ module.exports = {
             // });
            
             socket.on('disconnect',function(){
+                console.log(`${SOCKET_LIST[socket.id]} has disconnected`);
                 delete SOCKET_LIST[socket.id];
                 Student.onDisconnect(socket);
             });
